@@ -27,7 +27,6 @@ services:
       ANDROID_HOST: android
       ANDROID_PORT: 5555
       MAX_APK_BYTES: 536870912
-      APPETIZE_API_KEY: ${APPETIZE_API_KEY:-}
     volumes:
       - runner-data:/data
     ports:
