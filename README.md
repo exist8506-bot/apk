@@ -4,46 +4,28 @@ Trang web để tải file `.apk` và mở ứng dụng Android ngay trong trìn
 
 ## Chế độ chính: Web Cloud
 
-Luồng chính là:
+Luồng chính:
 
-`Browser → APK Runner → Appetize Cloud Android → iframe trong Browser`
+`Browser → APK Runner → Ramus Cloud Android → browser watch link`
 
-Appetize cung cấp Android ảo trên cloud và hỗ trợ nhúng thiết bị bằng iframe. APK có thể được upload qua REST API; API dùng header `X-API-KEY`. ([Appetize REST API](https://docs.appetize.io/rest-api))
+Ramus cung cấp Android emulator chạy trên cloud và cho phép chạy APK trong trình duyệt. Trial CLI hiện cho phép dùng không cần tài khoản, 1 phiên hoạt động, APK tối đa 150 MB và trả về một `watchUrl`. ([Ramus](https://ramus.dev/), [pricing](https://ramus.dev/pricing))
 
 Website của repo đã có sẵn:
 
 - Chọn/kéo APK.
-- Gửi APK đến Appetize từ server.
-- Nhận `buildId`.
-- Tự dựng embed URL.
-- Hiển thị Android trong chính trang.
+- Gửi APK từ server lên Ramus.
+- Tự tạo phiên Android cloud.
+- Nhận `watchUrl`.
+- Hiển thị phiên Android trong chính trang.
 - Không cần Docker/KVM trên máy người dùng.
 
-### Cấu hình Web Cloud
+### Deploy thành website có URL
 
-Cần một Appetize API token. Appetize yêu cầu API token để gọi REST API; token được tạo trong dashboard của tổ chức. ([Appetize REST API](https://docs.appetize.io/rest-api))
+Repo có `render.yaml` để deploy thành Node Web Service trên Render. Render hỗ trợ deploy Node app từ GitHub và cấp URL `onrender.com`. ([Render](https://render.com/docs/deploy-node-hapi-app))
 
-Tạo biến môi trường:
+Bạn có thể dùng nút **Deploy to Render** trong README/GitHub hoặc tạo Web Service từ repository.
 
-```env
-APPETIZE_API_KEY=...
-```
-
-Không đưa token vào JavaScript frontend và không commit token lên Git.
-
-Sau khi có token, chạy server Node:
-
-```bash
-npm start
-```
-
-Mở:
-
-```
-http://localhost:8080
-```
-
-Ở môi trường production, deploy Node server lên hosting có HTTPS và lưu `APPETIZE_API_KEY` dưới dạng secret. GitHub Pages chỉ phù hợp với frontend tĩnh; phần upload giữ API token cần backend/serverless.
+Không cần lưu API key Ramus trong source. Backend dùng trial CLI của Ramus.
 
 ## Chế độ phụ: Android Emulator cục bộ
 
@@ -57,7 +39,7 @@ Chạy trên máy có Docker/KVM:
 docker compose up -d --build
 ```
 
-Windows có thể dùng:
+Windows:
 
 ```powershell
 .\start.ps1
@@ -69,13 +51,17 @@ Dừng:
 .\stop.ps1
 ```
 
-## Lưu ý tương thích
+## Giới hạn Web Cloud trial
 
-Chế độ Web Cloud dùng Android emulator thật do nhà cung cấp cloud quản lý nên phù hợp hơn browser-native WASM cho APK hiện đại. Một số APK vẫn có thể không chạy do yêu cầu ABI, Android API, Play Services, phần cứng hoặc chính sách của dịch vụ.
+Ramus công bố trial miễn phí với tối đa 60 phút CLI access, 1 Android session đang hoạt động, APK tối đa 150 MB và mặc định tối đa 3 trial mỗi IP mỗi ngày. Phiên thường hết sau 30 phút không có thao tác. Watch link có hiệu lực mặc định 72 giờ nhưng không giữ emulator chạy liên tục. ([Ramus pricing](https://ramus.dev/pricing))
 
-File `Tiệm Truyện Chữ.apk` được dùng làm file tham khảo; không commit vào repository.
+## Tương thích
 
-## Bảo mật
+Ramus hiện chạy APK trên Android emulator x86_64; native libraries, phụ thuộc phần cứng hoặc dịch vụ bên ngoài có thể ảnh hưởng khả năng chạy. ([Ramus APK testing](https://ramus.dev/products/test-apps-online))
 
-Chỉ chạy APK mà bạn có quyền kiểm thử. Không dùng hệ thống này để phát tán hoặc kiểm thử phần mềm độc hại. Không công khai API token. Với public deployment nên thêm rate limit, giới hạn kích thước, xác thực người dùng và log/audit.
+File `Tiệm Truyện Chữ.apk` chỉ là file tham khảo và không được commit vào repository.
+
+## Bảo mật và quyền sử dụng
+
+Chỉ tải và chạy APK mà bạn có quyền kiểm thử. Không dùng dịch vụ cloud làm điện thoại từ xa hoặc cho mục đích vượt giới hạn dịch vụ. Ramus yêu cầu sử dụng cho build, test và review ứng dụng Android. ([Ramus AUP](https://ramus.dev/acceptable-use))
 
