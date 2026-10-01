@@ -12,7 +12,6 @@ services:
       - ./data:/data
     ports:
       - "6080:6080"
-      - "5555:5555"
     restart: unless-stopped
 
   web:
