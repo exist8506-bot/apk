@@ -11,6 +11,7 @@ const UPLOAD_DIR = path.join(DATA_DIR, 'uploads');
 const ANDROID_HOST = process.env.ANDROID_HOST || 'android';
 const ANDROID_PORT = process.env.ANDROID_PORT || '5555';
 const MAX_APK_BYTES = Number(process.env.MAX_APK_BYTES || 512 * 1024 * 1024);
+const APPETIZE_API_KEY = process.env.APPETIZE_API_KEY || '';
 const PUBLIC_DIR = path.join(process.cwd(), 'public');
 
 await fsp.mkdir(UPLOAD_DIR, { recursive: true });
@@ -64,6 +65,68 @@ async function getPackageMeta(filePath) {
   }
   const pkg = analyzed.stdout.trim() || null;
   return { packageName: pkg, activity: null, warning: null };
+}
+
+async function uploadToAppetize(req, res) {
+  if (!APPETIZE_API_KEY) {
+    return json(res, 503, {
+      error: 'Chưa cấu hình APPETIZE_API_KEY cho chế độ Web Cloud. Hãy thêm API key vào secret của máy chủ.'
+    });
+  }
+
+  const contentLength = Number(req.headers['content-length'] || 0);
+  if (contentLength > MAX_APK_BYTES) return json(res, 413, { error: 'APK quá lớn.' });
+
+  const chunks = [];
+  let bytes = 0;
+  for await (const chunk of req) {
+    bytes += chunk.length;
+    if (bytes > MAX_APK_BYTES) return json(res, 413, { error: 'APK quá lớn.' });
+    chunks.push(chunk);
+  }
+
+  const apk = Buffer.concat(chunks);
+  if (apk.subarray(0, 4).toString('hex') !== '504b0304') {
+    return json(res, 400, { error: 'File không phải APK hợp lệ.' });
+  }
+
+  const filename = safeFilename(urlName(req));
+  const form = new FormData();
+  form.append('platform', 'android');
+  form.append('file', new Blob([apk], { type: 'application/vnd.android.package-archive' }), filename);
+
+  const response = await fetch('https://api.appetize.io/v1/apps', {
+    method: 'POST',
+    headers: { 'X-API-KEY': APPETIZE_API_KEY },
+    body: form
+  });
+
+  const raw = await response.text();
+  let data;
+  try { data = JSON.parse(raw); } catch { data = { message: raw }; }
+
+  if (!response.ok) {
+    return json(res, response.status >= 500 ? 502 : response.status, {
+      error: data.message || data.error || 'Appetize từ chối APK.',
+      provider: 'appetize'
+    });
+  }
+
+  const buildId = data.publicKey || data.buildId;
+  if (!buildId) return json(res, 502, { error: 'Appetize phản hồi thiếu buildId.' });
+
+  return json(res, 200, {
+    ok: true,
+    provider: 'appetize',
+    buildId,
+    appUrl: `https://appetize.io/app/${buildId}?autoplay=true&screenOnly=true&device=pixel4&scale=auto`,
+    embedUrl: `https://appetize.io/embed/${buildId}?autoplay=true&screenOnly=true&device=pixel4&scale=auto`
+  });
+}
+
+function urlName(req) {
+  const header = req.headers['x-apk-filename'];
+  return header ? decodeURIComponent(header) : 'app.apk';
 }
 
 async function upload(req, res, url) {
@@ -206,6 +269,7 @@ const server = http.createServer(async (req, res) => {
   try {
     if (req.method === 'GET' && url.pathname === '/api/health') return health(res);
     if (req.method === 'POST' && url.pathname === '/api/upload') return upload(req, res, url);
+    if (req.method === 'POST' && url.pathname === '/api/cloud-upload') return uploadToAppetize(req, res);
     if (req.method === 'POST' && url.pathname === '/api/install') return install(req, res);
     if (req.method === 'POST' && url.pathname.startsWith('/api/device/')) {
       return deviceAction(req, res, url.pathname.slice('/api/device/'.length));
