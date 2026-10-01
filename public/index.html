@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>APK Runner</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div><strong>APK Runner</strong><span>Android trên máy tính qua trình duyệt</span></div>
+    <div id="status" class="status"><i></i> Đang kiểm tra</div>
+  </header>
+
+  <main class="layout">
+    <section class="panel controls">
+      <div class="hero">
+        <div class="eyebrow">ANDROID EMULATOR</div>
+        <h1>Chạy file APK ngay trên máy tính</h1>
+        <p>Chọn APK, cài vào thiết bị Android ảo và điều khiển trực tiếp trong cửa sổ bên phải.</p>
+      </div>
+
+      <label class="drop" id="drop">
+        <input id="file" type="file" accept=".apk,application/vnd.android.package-archive">
+        <div class="drop-icon">↑</div>
+        <strong>Kéo APK vào đây</strong>
+        <span>hoặc bấm để chọn file • tối đa 512 MB</span>
+      </label>
+
+      <div id="fileInfo" class="file-info hidden"></div>
+      <button id="install" class="primary" disabled>Cài & mở APK</button>
+      <div id="message" class="message" role="status"></div>
+
+      <div class="tips">
+        <div><b>1</b><span>Chọn APK</span></div>
+        <div><b>2</b><span>Cài vào Android ảo</span></div>
+        <div><b>3</b><span>Điều khiển bằng chuột & bàn phím</span></div>
+      </div>
+    </section>
+
+    <section class="panel device-panel">
+      <div class="device-head">
+        <div><strong>Thiết bị Android ảo</strong><small id="deviceState">Đang khởi động…</small></div>
+        <button id="reload" class="ghost">↻ Làm mới</button>
+      </div>
+      <div class="device-frame">
+        <iframe id="screen" title="Android emulator" src="about:blank" allow="fullscreen; clipboard-read; clipboard-write"></iframe>
+        <div id="boot" class="boot"><div class="spinner"></div><strong>Đang kết nối emulator…</strong><span>Lần khởi động đầu có thể lâu hơn bình thường.</span></div>
+      </div>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
