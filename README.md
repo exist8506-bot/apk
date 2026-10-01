@@ -1,5 +1,7 @@
 # APK Runner
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/exist8506-bot/apk)
+
 Trang web để tải file `.apk` và mở ứng dụng Android ngay trong trình duyệt.
 
 ## Chế độ chính: Web Cloud
