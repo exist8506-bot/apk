@@ -1,46 +1,81 @@
 # APK Runner
 
-Trang web tự host để tải file `.apk`, cài vào Android Emulator chạy trong Docker và điều khiển thiết bị Android ngay trong trình duyệt.
+Trang web để tải file `.apk` và mở ứng dụng Android ngay trong trình duyệt.
 
-## Kiến trúc
+## Chế độ chính: Web Cloud
 
-`Browser → APK Runner web → ADB → Android Emulator → noVNC`
+Luồng chính là:
 
-Website chỉ là lớp điều khiển. APK được chạy trong Android Emulator thật, không được thực thi trực tiếp bằng JavaScript của trình duyệt.
+`Browser → APK Runner → Appetize Cloud Android → iframe trong Browser`
 
-## Chạy
+Appetize cung cấp Android ảo trên cloud và hỗ trợ nhúng thiết bị bằng iframe. APK có thể được upload qua REST API; API dùng header `X-API-KEY`. citehttps://docs.appetize.io/rest-api
 
-### Yêu cầu
+Website của repo đã có sẵn:
 
-- Docker + Docker Compose.
-- Máy chủ có hardware virtualization/KVM để emulator chạy tốt.
-- Mở được các cổng 8080 (website) và 6080 (noVNC).
+- Chọn/kéo APK.
+- Gửi APK đến Appetize từ server.
+- Nhận `buildId`.
+- Tự dựng embed URL.
+- Hiển thị Android trong chính trang.
+- Không cần Docker/KVM trên máy người dùng.
 
-### Khởi động
+### Cấu hình Web Cloud
+
+Cần một Appetize API token. Appetize yêu cầu API token để gọi REST API; token được tạo trong dashboard của tổ chức. citehttps://docs.appetize.io/rest-api
+
+Tạo biến môi trường:
+
+```env
+APPETIZE_API_KEY=...
+```
+
+Không đưa token vào JavaScript frontend và không commit token lên Git.
+
+Sau khi có token, chạy server Node:
+
+```bash
+npm start
+```
+
+Mở:
+
+```
+http://localhost:8080
+```
+
+Ở môi trường production, deploy Node server lên hosting có HTTPS và lưu `APPETIZE_API_KEY` dưới dạng secret. GitHub Pages chỉ phù hợp với frontend tĩnh; phần upload giữ API token cần backend/serverless.
+
+## Chế độ phụ: Android Emulator cục bộ
+
+Repository vẫn giữ một chế độ self-host bằng Docker:
+
+`Browser → Node → ADB → Android Emulator → noVNC`
+
+Chạy trên máy có Docker/KVM:
 
 ```bash
 docker compose up -d --build
 ```
 
-Sau đó mở:
+Windows có thể dùng:
 
-- Website: `http://localhost:8080`
-- noVNC trực tiếp: `http://localhost:6080`
+```powershell
+.\start.ps1
+```
 
-Lần boot đầu của Android Emulator có thể lâu. Trên Windows, khả năng `/dev/kvm` phụ thuộc vào môi trường Docker/WSL2; Linux có KVM thường phù hợp hơn.
+Dừng:
 
-## Luồng sử dụng
+```powershell
+.\stop.ps1
+```
 
-1. Kéo file APK vào trang.
-2. Server kiểm tra ZIP/APK và đọc application ID bằng Android `apkanalyzer`.
-3. Bấm **Cài & mở APK**.
-4. Server dùng ADB cài APK vào emulator và gọi `monkey` để mở package.
-5. Màn hình Android được hiển thị và điều khiển bằng noVNC.
+## Lưu ý tương thích
+
+Chế độ Web Cloud dùng Android emulator thật do nhà cung cấp cloud quản lý nên phù hợp hơn browser-native WASM cho APK hiện đại. Một số APK vẫn có thể không chạy do yêu cầu ABI, Android API, Play Services, phần cứng hoặc chính sách của dịch vụ.
+
+File `Tiệm Truyện Chữ.apk` được dùng làm file tham khảo; không commit vào repository.
 
 ## Bảo mật
 
-Bản đầu tiên dành cho chạy cục bộ/self-host. Không công khai cổng ADB `5555` ra Internet. Nếu triển khai public cần thêm xác thực, HTTPS, giới hạn phiên, sandbox, quota và cô lập network trước khi cho người lạ tải APK.
+Chỉ chạy APK mà bạn có quyền kiểm thử. Không dùng hệ thống này để phát tán hoặc kiểm thử phần mềm độc hại. Không công khai API token. Với public deployment nên thêm rate limit, giới hạn kích thước, xác thực người dùng và log/audit.
 
-## Ghi chú về APK mẫu
-
-File mẫu được dùng để kiểm tra tính đa DEX/Android compatibility, không cần commit vào repository. Repository không chứa APK người dùng tải lên; các file upload nằm trong `data/uploads/` và bị `.gitignore` loại khỏi Git.
