@@ -99,6 +99,25 @@ async function upload(req, res, url) {
   }
 }
 
+async function deviceAction(req, res, action) {
+  const actions = {
+    home: 'KEYCODE_HOME',
+    back: 'KEYCODE_BACK',
+    recents: 'KEYCODE_APP_SWITCH',
+    rotate: 'KEYCODE_ROTATE'
+  };
+  const key = actions[action];
+  if (!key) return json(res, 400, { error: 'Thao tác không hợp lệ.' });
+  try {
+    await ensureAdb();
+    const result = await adb(['shell', 'input', 'keyevent', key]);
+    if (result.code !== 0) return json(res, 502, { error: result.stderr || result.stdout || 'Không gửi được thao tác.' });
+    return json(res, 200, { ok: true, action });
+  } catch (error) {
+    return json(res, 503, { error: error.message || 'Emulator chưa sẵn sàng.' });
+  }
+}
+
 async function install(req, res) {
   let body = '';
   for await (const chunk of req) body += chunk;
@@ -188,6 +207,9 @@ const server = http.createServer(async (req, res) => {
     if (req.method === 'GET' && url.pathname === '/api/health') return health(res);
     if (req.method === 'POST' && url.pathname === '/api/upload') return upload(req, res, url);
     if (req.method === 'POST' && url.pathname === '/api/install') return install(req, res);
+    if (req.method === 'POST' && url.pathname.startsWith('/api/device/')) {
+      return deviceAction(req, res, url.pathname.slice('/api/device/'.length));
+    }
     if (req.method === 'GET') return serveStatic(req, res, url);
     return json(res, 405, { error: 'Method not allowed' });
   } catch (error) {
