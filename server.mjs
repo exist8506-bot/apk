@@ -41,13 +41,19 @@ async function adb(args) {
 }
 
 async function ensureAdb() {
-  const connect = await run('adb', ['connect', `${ANDROID_HOST}:${ANDROID_PORT}`]);
-  if (connect.code !== 0 && !/connected to/i.test(connect.stdout)) {
+  const target = `${ANDROID_HOST}:${ANDROID_PORT}`;
+  const connect = await run('adb', ['connect', target]);
+  if (connect.code !== 0 && !/connected to|already connected/i.test(connect.stdout + connect.stderr)) {
     throw new Error(`ADB connect failed: ${connect.stderr || connect.stdout}`);
   }
   const devices = await run('adb', ['devices']);
-  if (!devices.stdout.includes(`${ANDROID_HOST}:${ANDROID_PORT}\tdevice`)) {
+  const ready = devices.stdout.split(/\r?\n/).some(line => line.trim() === `${target}\tdevice`);
+  if (!ready) {
     throw new Error(`Android emulator not ready. ADB reports: ${devices.stdout || devices.stderr}`);
+  }
+  const boot = await run('adb', ['-s', target, 'shell', 'getprop', 'sys.boot_completed']);
+  if (boot.code !== 0 || boot.stdout.trim() !== '1') {
+    throw new Error('Android emulator is connected but still booting.');
   }
 }
 
@@ -111,17 +117,34 @@ async function install(req, res) {
       return json(res, 422, { error: `Cài APK thất bại: ${installed.stderr || installed.stdout}` });
     }
     let launched = false;
+    let activity = null;
+    let launchOutput = '';
     if (meta.packageName) {
-      const launch = await adb(['shell', 'monkey', '-p', meta.packageName, '1']);
-      launched = launch.code === 0 && /Events injected/i.test(launch.stdout + launch.stderr);
+      const resolved = await adb([
+        'shell', 'cmd', 'package', 'resolve-activity', '--brief',
+        '-a', 'android.intent.action.MAIN',
+        '-c', 'android.intent.category.LAUNCHER',
+        meta.packageName
+      ]);
+      const line = resolved.stdout.split(/\r?\n/).map(x => x.trim()).filter(Boolean).pop();
+      if (resolved.code === 0 && line && line.includes('/')) {
+        activity = line;
+        const start = await adb(['shell', 'am', 'start', '-n', activity]);
+        launched = start.code === 0 && /Starting: Intent/i.test(start.stdout + start.stderr);
+        launchOutput = start.stdout.trim() || start.stderr.trim();
+      } else {
+        const fallback = await adb(['shell', 'monkey', '-p', meta.packageName, '1']);
+        launched = fallback.code === 0 && /Events injected/i.test(fallback.stdout + fallback.stderr);
+        launchOutput = fallback.stdout.trim() || fallback.stderr.trim();
+      }
     }
     return json(res, 200, {
       ok: true,
       packageName: meta.packageName,
-      activity: meta.activity,
+      activity,
       launched,
       output: installed.stdout.trim(),
-      launchOutput: launched ? 'Ứng dụng đã được mở.' : 'Đã cài đặt nhưng chưa tự mở được.'
+      launchOutput: launched ? 'Ứng dụng đã được mở.' : (launchOutput || 'Đã cài đặt nhưng chưa tự mở được.')
     });
   } catch (error) {
     return json(res, 503, { error: error.message || 'Emulator chưa sẵn sàng.' });
