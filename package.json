@@ -1,0 +1,10 @@
+{
+  "name": "apk-runner-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Self-hosted web interface for running Android APKs in a Dockerized emulator.",
+  "scripts": {
+    "start": "node server.mjs",
+    "check": "node --check server.mjs && node --check public/app.js"
+  }
+}
