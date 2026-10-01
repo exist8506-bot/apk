@@ -41,7 +41,13 @@
     <section class="panel device-panel">
       <div class="device-head">
         <div><strong>Thiết bị Android ảo</strong><small id="deviceState">Đang khởi động…</small></div>
-        <button id="reload" class="ghost">↻ Làm mới</button>
+        <div class="device-actions">
+          <button class="ghost action" data-action="back" title="Quay lại">‹</button>
+          <button class="ghost action" data-action="home" title="Trang chủ">⌂</button>
+          <button class="ghost action" data-action="recents" title="Ứng dụng gần đây">▣</button>
+          <button class="ghost action" data-action="rotate" title="Xoay màn hình">↻</button>
+          <button id="reload" class="ghost">Làm mới</button>
+        </div>
       </div>
       <div class="device-frame">
         <iframe id="screen" title="Android emulator" src="about:blank" allow="fullscreen; clipboard-read; clipboard-write"></iframe>
