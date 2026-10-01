@@ -73,6 +73,22 @@ function formatSize(bytes) {
 $('#file').addEventListener('change', e => e.target.files[0] && upload(e.target.files[0]).catch(e => message(e.message, 'error')));
 $('#install').addEventListener('click', install);
 $('#reload').addEventListener('click', health);
+document.querySelectorAll('.action').forEach(button => {
+  button.addEventListener('click', async () => {
+    const action = button.dataset.action;
+    try {
+      button.disabled = true;
+      const r = await fetch(`/api/device/${action}`, { method: 'POST' });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error || 'Thao tác thất bại.');
+      message(action === 'back' ? 'Đã quay lại.' : action === 'home' ? 'Đã về màn hình chính.' : action === 'recents' ? 'Đã mở ứng dụng gần đây.' : 'Đã gửi lệnh xoay màn hình.', 'success');
+    } catch (e) {
+      message(e.message, 'error');
+    } finally {
+      button.disabled = false;
+    }
+  });
+});
 const drop = $('#drop');
 ['dragenter','dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('drag'); }));
 ['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('drag'); }));
