@@ -1,0 +1,33 @@
+services:
+  android:
+    image: budtmo/docker-android:emulator_11.0
+    container_name: apk-runner-android
+    privileged: true
+    devices:
+      - /dev/kvm
+    environment:
+      EMULATOR_DEVICE: "Samsung Galaxy S10"
+      WEB_VNC: "true"
+    volumes:
+      - ./data:/data
+    ports:
+      - "6080:6080"
+      - "5555:5555"
+    restart: unless-stopped
+
+  web:
+    build: .
+    container_name: apk-runner-web
+    depends_on:
+      - android
+    environment:
+      PORT: 8080
+      DATA_DIR: /data
+      ANDROID_HOST: android
+      ANDROID_PORT: 5555
+      MAX_APK_BYTES: 536870912
+    volumes:
+      - ./data:/data
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
