@@ -8,7 +8,7 @@ Luồng chính là:
 
 `Browser → APK Runner → Appetize Cloud Android → iframe trong Browser`
 
-Appetize cung cấp Android ảo trên cloud và hỗ trợ nhúng thiết bị bằng iframe. APK có thể được upload qua REST API; API dùng header `X-API-KEY`. citehttps://docs.appetize.io/rest-api
+Appetize cung cấp Android ảo trên cloud và hỗ trợ nhúng thiết bị bằng iframe. APK có thể được upload qua REST API; API dùng header `X-API-KEY`. ([Appetize REST API](https://docs.appetize.io/rest-api))
 
 Website của repo đã có sẵn:
 
@@ -21,7 +21,7 @@ Website của repo đã có sẵn:
 
 ### Cấu hình Web Cloud
 
-Cần một Appetize API token. Appetize yêu cầu API token để gọi REST API; token được tạo trong dashboard của tổ chức. citehttps://docs.appetize.io/rest-api
+Cần một Appetize API token. Appetize yêu cầu API token để gọi REST API; token được tạo trong dashboard của tổ chức. ([Appetize REST API](https://docs.appetize.io/rest-api))
 
 Tạo biến môi trường:
 
