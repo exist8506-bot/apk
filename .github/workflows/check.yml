@@ -3,7 +3,7 @@ on:
   push:
   pull_request:
 jobs:
-  syntax:
+  syntax-and-compose:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -11,3 +11,4 @@ jobs:
         with:
           node-version: 22
       - run: npm run check
+      - run: docker compose config -q
