@@ -11,7 +11,6 @@ const UPLOAD_DIR = path.join(DATA_DIR, 'uploads');
 const ANDROID_HOST = process.env.ANDROID_HOST || 'android';
 const ANDROID_PORT = process.env.ANDROID_PORT || '5555';
 const MAX_APK_BYTES = Number(process.env.MAX_APK_BYTES || 512 * 1024 * 1024);
-const APPETIZE_API_KEY = process.env.APPETIZE_API_KEY || '';
 const PUBLIC_DIR = path.join(process.cwd(), 'public');
 
 await fsp.mkdir(UPLOAD_DIR, { recursive: true });
@@ -67,66 +66,70 @@ async function getPackageMeta(filePath) {
   return { packageName: pkg, activity: null, warning: null };
 }
 
-async function uploadToAppetize(req, res) {
-  if (!APPETIZE_API_KEY) {
-    return json(res, 503, {
-      error: 'Chưa cấu hình APPETIZE_API_KEY cho chế độ Web Cloud. Hãy thêm API key vào secret của máy chủ.'
-    });
-  }
-
+async function uploadToRamus(req, res) {
   const contentLength = Number(req.headers['content-length'] || 0);
-  if (contentLength > MAX_APK_BYTES) return json(res, 413, { error: 'APK quá lớn.' });
+  const RAMUS_MAX = 150 * 1024 * 1024;
+  if (contentLength > RAMUS_MAX) {
+    return json(res, 413, { error: 'Ramus trial giới hạn APK 150 MB.' });
+  }
 
-  const chunks = [];
+  const id = crypto.randomUUID();
+  const filename = safeFilename(req.headers['x-apk-filename'] ? decodeURIComponent(req.headers['x-apk-filename']) : 'app.apk');
+  const filePath = path.join(UPLOAD_DIR, `${id}.apk`);
   let bytes = 0;
-  for await (const chunk of req) {
-    bytes += chunk.length;
-    if (bytes > MAX_APK_BYTES) return json(res, 413, { error: 'APK quá lớn.' });
-    chunks.push(chunk);
-  }
+  const out = fs.createWriteStream(filePath, { flags: 'wx' });
 
-  const apk = Buffer.concat(chunks);
-  if (apk.subarray(0, 4).toString('hex') !== '504b0304') {
-    return json(res, 400, { error: 'File không phải APK hợp lệ.' });
-  }
+  try {
+    for await (const chunk of req) {
+      bytes += chunk.length;
+      if (bytes > RAMUS_MAX) throw new Error('Ramus trial giới hạn APK 150 MB.');
+      out.write(chunk);
+    }
+    out.end();
+    await new Promise((resolve, reject) => { out.on('finish', resolve); out.on('error', reject); });
 
-  const filename = safeFilename(urlName(req));
-  const form = new FormData();
-  form.append('platform', 'android');
-  form.append('file', new Blob([apk], { type: 'application/vnd.android.package-archive' }), filename);
+    const fd = await fsp.open(filePath, 'r');
+    const header = Buffer.alloc(4);
+    await fd.read(header, 0, 4, 0);
+    await fd.close();
+    if (header.toString('hex') !== '504b0304') throw new Error('File không phải APK hợp lệ.');
 
-  const response = await fetch('https://api.appetize.io/v1/apps', {
-    method: 'POST',
-    headers: { 'X-API-KEY': APPETIZE_API_KEY },
-    body: form
-  });
+    const trial = await run('npx', ['--yes', 'ramus-cli@0.1.12', 'trial'], { cwd: DATA_DIR });
+    if (trial.code !== 0) {
+      throw new Error(trial.stderr || trial.stdout || 'Không kích hoạt được Ramus trial.');
+    }
 
-  const raw = await response.text();
-  let data;
-  try { data = JSON.parse(raw); } catch { data = { message: raw }; }
+    const start = await run(
+      'npx',
+      ['--yes', 'ramus-cli@0.1.12', 'session', 'start', '--apk', filePath, '--wait'],
+      { cwd: DATA_DIR, env: { ...process.env, NO_COLOR: '1' } }
+    );
+    if (start.code !== 0) {
+      throw new Error(start.stderr || start.stdout || 'Không tạo được phiên Android cloud.');
+    }
 
-  if (!response.ok) {
-    return json(res, response.status >= 500 ? 502 : response.status, {
-      error: data.message || data.error || 'Appetize từ chối APK.',
-      provider: 'appetize'
+    const lines = start.stdout.split(/\r?\n/).map(x => x.trim()).filter(Boolean);
+    let payload = null;
+    for (const line of lines.reverse()) {
+      try { payload = JSON.parse(line); break; } catch {}
+    }
+
+    const watchUrl = payload?.watchUrl || payload?.watchURL || payload?.url;
+    const session = payload?.session || payload?.id;
+    if (!watchUrl) throw new Error('Ramus không trả về watchUrl.\n' + start.stdout);
+
+    return json(res, 200, {
+      ok: true,
+      provider: 'ramus',
+      session,
+      filename,
+      bytes,
+      watchUrl
     });
+  } catch (error) {
+    await fsp.rm(filePath, { force: true });
+    return json(res, 502, { error: error.message || 'Không thể chạy APK trên cloud.' });
   }
-
-  const buildId = data.publicKey || data.buildId;
-  if (!buildId) return json(res, 502, { error: 'Appetize phản hồi thiếu buildId.' });
-
-  return json(res, 200, {
-    ok: true,
-    provider: 'appetize',
-    buildId,
-    appUrl: `https://appetize.io/app/${buildId}?autoplay=true&screenOnly=true&device=pixel4&scale=auto`,
-    embedUrl: `https://appetize.io/embed/${buildId}?autoplay=true&screenOnly=true&device=pixel4&scale=auto`
-  });
-}
-
-function urlName(req) {
-  const header = req.headers['x-apk-filename'];
-  return header ? decodeURIComponent(header) : 'app.apk';
 }
 
 async function upload(req, res, url) {
@@ -269,7 +272,7 @@ const server = http.createServer(async (req, res) => {
   try {
     if (req.method === 'GET' && url.pathname === '/api/health') return health(res);
     if (req.method === 'POST' && url.pathname === '/api/upload') return upload(req, res, url);
-    if (req.method === 'POST' && url.pathname === '/api/cloud-upload') return uploadToAppetize(req, res);
+    if (req.method === 'POST' && url.pathname === '/api/cloud-upload') return uploadToRamus(req, res);
     if (req.method === 'POST' && url.pathname === '/api/install') return install(req, res);
     if (req.method === 'POST' && url.pathname.startsWith('/api/device/')) {
       return deviceAction(req, res, url.pathname.slice('/api/device/'.length));
