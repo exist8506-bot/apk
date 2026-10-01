@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: apk-runner-web
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: APPETIZE_API_KEY
+        sync: false
+      - key: MAX_APK_BYTES
+        value: "536870912"
