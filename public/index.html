@@ -2,60 +2,60 @@
 <html lang="vi">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>APK Runner</title>
-  <link rel="stylesheet" href="/styles.css">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>APK Runner — GitHub Pages</title>
+  <link rel="stylesheet" href="./styles.css">
+  <meta name="description" content="APK Runner - mở ứng dụng Android trên web">
 </head>
 <body>
   <header class="topbar">
-    <div><strong>APK Runner</strong><span>Android trên máy tính qua trình duyệt</span></div>
-    <div id="status" class="status"><i></i> Web Cloud</div>
+    <div><strong>APK Runner</strong><span>Web Android Emulator</span></div>
+    <div class="status online"><i></i> GitHub Pages</div>
   </header>
 
-  <main class="layout">
+  <main class="layout single">
     <section class="panel controls">
       <div class="hero">
-        <div class="eyebrow">ANDROID EMULATOR</div>
-        <h1>Chạy file APK ngay trên máy tính</h1>
-        <p>Chọn APK, cài vào thiết bị Android ảo và điều khiển trực tiếp trong cửa sổ bên phải.</p>
+        <div class="eyebrow">BROWSER APK RUNNER</div>
+        <h1>Chạy APK trên máy tính bằng trình duyệt</h1>
+        <p>GitHub Pages cung cấp giao diện miễn phí. Khi chọn APK, bạn có thể mở trình kiểm thử Android Cloud để chạy file trên máy Android ảo.</p>
       </div>
 
       <label class="drop" id="drop">
         <input id="file" type="file" accept=".apk,application/vnd.android.package-archive">
         <div class="drop-icon">↑</div>
         <strong>Kéo APK vào đây</strong>
-        <span>hoặc bấm để chọn file • tối đa 512 MB</span>
+        <span>hoặc bấm để chọn file</span>
       </label>
 
       <div id="fileInfo" class="file-info hidden"></div>
-      <button id="runWeb" class="primary" disabled>Chạy APK trên web</button>
-      <button id="runLocal" class="secondary" disabled>Cài vào emulator cục bộ</button>
-      <div id="message" class="message" role="status"></div>
+      <button id="openTester" class="primary" disabled>Mở trình chạy APK</button>
+      <div id="message" class="message" role="status">
+        GitHub Pages không có backend để upload APK trực tiếp. Hãy chọn APK rồi mở trình tester.
+      </div>
 
       <div class="tips">
-        <div><b>1</b><span>Chọn APK</span></div>
-        <div><b>2</b><span>Cài vào Android ảo</span></div>
-        <div><b>3</b><span>Điều khiển bằng chuột & bàn phím</span></div>
+        <div><b>1</b><span>Chọn file APK</span></div>
+        <div><b>2</b><span>Mở trình Android Cloud</span></div>
+        <div><b>3</b><span>Chạy APK trong trình duyệt</span></div>
       </div>
+
+      <a class="provider" href="https://ramus.dev/products/test-apps-online" target="_blank" rel="noopener">
+        Mở Ramus Android Cloud ↗
+      </a>
     </section>
 
     <section class="panel device-panel">
       <div class="device-head">
-        <div><strong>Thiết bị Android ảo</strong><small id="deviceState">Đang khởi động…</small></div>
-        <div class="device-actions">
-          <button class="ghost action" data-action="back" title="Quay lại">‹</button>
-          <button class="ghost action" data-action="home" title="Trang chủ">⌂</button>
-          <button class="ghost action" data-action="recents" title="Ứng dụng gần đây">▣</button>
-          <button class="ghost action" data-action="rotate" title="Xoay màn hình">↻</button>
-          <button id="reload" class="ghost">Làm mới</button>
-        </div>
+        <div><strong>Android Cloud</strong><small>Trình xem sẽ mở ở tab mới</small></div>
       </div>
-      <div class="device-frame">
-        <iframe id="screen" title="Android emulator" src="about:blank" allow="fullscreen; clipboard-read; clipboard-write"></iframe>
-        <div id="boot" class="boot"><div class="spinner"></div><strong>Chưa có phiên Web Cloud</strong><span>Chọn APK bên trái để tạo máy Android trên web.</span></div>
+      <div class="device-placeholder">
+        <div class="placeholder-icon">▣</div>
+        <strong>Chưa có phiên Android</strong>
+        <span>GitHub Pages không chạy server-side code. Phiên emulator cần một cloud Android service.</span>
       </div>
     </section>
   </main>
-  <script src="/app.js"></script>
+  <script src="./app.js"></script>
 </body>
 </html>
