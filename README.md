@@ -1,69 +1,55 @@
-# APK Runner
+# Mạch Nhớ — Bộ nhớ hội thoại cá nhân
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/exist8506-bot/apk)
+Mạch Nhớ là một ứng dụng web tĩnh giúp gom các cuộc trò chuyện thành thư viện có thể tìm kiếm, đề xuất ghi nhớ dài hạn và chuyển thông tin đã chọn vào một cuộc trò chuyện AI mới.
 
-Trang web để tải file `.apk` và mở ứng dụng Android ngay trong trình duyệt.
+## Tính năng
 
-## Chế độ chính: Web Cloud
+- Nhập gói xuất ChatGPT (conversations.json) hoặc các file TXT, Markdown, HTML có nội dung hội thoại.
+- Tạo chỉ mục tìm kiếm cục bộ, phân loại chủ đề và bản tóm tắt sơ bộ bằng quy tắc tại trình duyệt.
+- Đề xuất ghi nhớ và việc cần làm; bạn phải duyệt trước khi lưu vào danh sách chính thức.
+- Thêm, sửa, ghim và xóa ghi nhớ; tìm kiếm trên thư viện.
+- Xem và sao chép bản ghi hội thoại; xuất thư viện Markdown.
+- Sao lưu/khôi phục JSON, sao chép gói ghi nhớ và prompt để nhờ AI phân tích sâu.
+- Giao diện tương thích máy tính/điện thoại và có thể cache để mở lại khi offline.
 
-Luồng chính:
+## Bắt đầu
 
-`Browser → APK Runner → Ramus Cloud Android → browser watch link`
+### Dùng GitHub Pages
 
-Ramus cung cấp Android emulator chạy trên cloud và cho phép chạy APK trong trình duyệt. Trial CLI hiện cho phép dùng không cần tài khoản, 1 phiên hoạt động, APK tối đa 150 MB và trả về một `watchUrl`. ([Ramus](https://ramus.dev/), [pricing](https://ramus.dev/pricing))
+Repo có workflow tại .github/workflows/pages.yml. Trong Settings → Pages, chọn GitHub Actions làm nguồn triển khai (chỉ cần thiết lập ban đầu nếu repo chưa bật Pages). Mỗi lần push lên main, workflow sẽ kiểm tra cú pháp và triển khai thư mục public/.
 
-Website của repo đã có sẵn:
+Sau khi workflow hoàn tất, mở URL Pages được hiển thị trong phần Settings → Pages của repo.
 
-- Chọn/kéo APK.
-- Gửi APK từ server lên Ramus.
-- Tự tạo phiên Android cloud.
-- Nhận `watchUrl`.
-- Hiển thị phiên Android trong chính trang.
-- Không cần Docker/KVM trên máy người dùng.
+### Chạy trên máy
 
-### Deploy thành website có URL
+Dùng Node.js 20+:
 
-Repo có `render.yaml` để deploy thành Node Web Service trên Render. Render hỗ trợ deploy Node app từ GitHub và cấp URL `onrender.com`. ([Render](https://render.com/docs/deploy-node-hapi-app))
+    npm run check
+    npm run serve
 
-Bạn có thể dùng nút **Deploy to Render** trong README/GitHub hoặc tạo Web Service từ repository.
+Sau đó mở http://localhost:8080. Có thể dùng một máy chủ tĩnh tương thích để phục vụ thư mục public/; nếu mở trực tiếp file HTML bằng file://, trình duyệt có thể chặn service worker.
 
-Không cần lưu API key Ramus trong source. Backend dùng trial CLI của Ramus.
+## Nhập dữ liệu ChatGPT
 
-## Chế độ phụ: Android Emulator cục bộ
+1. Trong ChatGPT, vào Settings → Data Controls → Export Data và yêu cầu xuất dữ liệu.
+2. Tải gói ZIP khi nhận được, giải nén trên thiết bị cá nhân.
+3. Trong Mạch Nhớ, chọn Nhập hội thoại và chọn file conversations.json. Có thể nhập nhiều file một lượt.
+4. Xem các ghi nhớ được gợi ý trên trang Tổng quan. Chỉ lưu những gì còn đúng và thực sự hữu ích.
 
-Repository vẫn giữ một chế độ self-host bằng Docker:
+Ứng dụng không thể tự đọc lịch sử ChatGPT, không đăng nhập thay bạn và không đồng bộ tự động với tài khoản ChatGPT.
 
-`Browser → Node → ADB → Android Emulator → noVNC`
+## Riêng tư và giới hạn
 
-Chạy trên máy có Docker/KVM:
+- Mạch Nhớ là app tĩnh: không có API backend nhận hội thoại. Dữ liệu được lưu trong IndexedDB của trình duyệt hiện tại.
+- Nội dung được phân tích tại máy bằng quy tắc từ khóa. Đây không phải mô hình AI; tóm tắt và phân loại có thể sai, bỏ sót ngữ cảnh hoặc hiểu nhầm câu phủ định.
+- Các ghi nhớ rút ra từ hội thoại chỉ là gợi ý và cần người dùng xác nhận trước khi được lưu.
+- Dữ liệu trình duyệt không phải một kho mã hóa chuyên dụng. Người có quyền sử dụng cùng hồ sơ trình duyệt có thể truy cập dữ liệu; bản sao lưu JSON được xuất ra không mã hóa.
+- Hãy sao lưu định kỳ, không dùng máy dùng chung để lưu dữ liệu riêng tư, và tránh nhập mật khẩu, token, số thẻ hay thông tin cực kỳ nhạy cảm.
+- Việc xóa dữ liệu trình duyệt hoặc chuyển sang thiết bị/trình duyệt khác có thể làm mất dữ liệu chưa sao lưu.
+- Mạch Nhớ không phải bộ nhớ nội bộ của ChatGPT. Để đưa ngữ cảnh vào một cuộc trò chuyện mới, hãy dùng Sao chép gói nhớ rồi tự dán vào cuộc trò chuyện đó.
 
-```bash
-docker compose up -d --build
-```
+## Kiểm tra
 
-Windows:
+    npm run check
 
-```powershell
-.\start.ps1
-```
-
-Dừng:
-
-```powershell
-.\stop.ps1
-```
-
-## Giới hạn Web Cloud trial
-
-Ramus công bố trial miễn phí với tối đa 60 phút CLI access, 1 Android session đang hoạt động, APK tối đa 150 MB và mặc định tối đa 3 trial mỗi IP mỗi ngày. Phiên thường hết sau 30 phút không có thao tác. Watch link có hiệu lực mặc định 72 giờ nhưng không giữ emulator chạy liên tục. ([Ramus pricing](https://ramus.dev/pricing))
-
-## Tương thích
-
-Ramus hiện chạy APK trên Android emulator x86_64; native libraries, phụ thuộc phần cứng hoặc dịch vụ bên ngoài có thể ảnh hưởng khả năng chạy. ([Ramus APK testing](https://ramus.dev/products/test-apps-online))
-
-File `Tiệm Truyện Chữ.apk` chỉ là file tham khảo và không được commit vào repository.
-
-## Bảo mật và quyền sử dụng
-
-Chỉ tải và chạy APK mà bạn có quyền kiểm thử. Không dùng dịch vụ cloud làm điện thoại từ xa hoặc cho mục đích vượt giới hạn dịch vụ. Ramus yêu cầu sử dụng cho build, test và review ứng dụng Android. ([Ramus AUP](https://ramus.dev/acceptable-use))
-
+Lệnh kiểm tra cú pháp JavaScript/service worker, JSON manifest và các file tĩnh quan trọng. Nó không thay thế việc kiểm tra thủ công trên các trình duyệt mục tiêu.

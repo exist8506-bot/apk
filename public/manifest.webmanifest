@@ -1,0 +1,20 @@
+{
+  "id": "/",
+  "name": "Mạch Nhớ — Bộ nhớ hội thoại",
+  "short_name": "Mạch Nhớ",
+  "description": "Bộ nhớ hội thoại riêng tư, lưu những điều quan trọng.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f5f0",
+  "theme_color": "#f7f5f0",
+  "lang": "vi",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,9 +1,11 @@
 name: Check
 on:
   push:
+    branches: [main]
   pull_request:
+    branches: [main]
 jobs:
-  syntax-and-compose:
+  static-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -11,4 +13,3 @@ jobs:
         with:
           node-version: 22
       - run: npm run check
-      - run: docker compose config -q
