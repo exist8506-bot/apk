@@ -130,7 +130,7 @@
   function injectControls() {
     const view=$('#view');
     if(!view) return;
-    makeButton($('.page-head .head-actions',view));
+    if(!$('.settings-grid',view)) makeButton($('.page-head .head-actions',view));
     const cards=[...view.querySelectorAll('.setting-panel')];
     const chatCard=cards.find(c=>(($('h2',c)||{}).textContent||'').includes('ChatGPT'));
     if(chatCard) {
