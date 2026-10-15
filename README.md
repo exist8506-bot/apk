@@ -10,6 +10,7 @@ Mạch Nhớ là một ứng dụng web tĩnh giúp gom các cuộc trò chuyệ
 - Thêm, sửa, ghim và xóa ghi nhớ; tìm kiếm trên thư viện.
 - Xem và sao chép bản ghi hội thoại; xuất thư viện Markdown.
 - Sao lưu/khôi phục JSON, sao chép gói ghi nhớ và prompt để nhờ AI phân tích sâu.
+- Xuất tệp ngữ cảnh cho ChatGPT gồm hướng dẫn trợ lý, ngữ cảnh nền, ghi nhớ đã duyệt, việc đang mở và chỉ mục 30 hội thoại gần nhất. Đưa tệp này vào ChatGPT Library hoặc đính kèm trong cuộc trò chuyện mới.
 - Giao diện tương thích máy tính/điện thoại và có thể cache để mở lại khi offline.
 
 ## Bắt đầu
