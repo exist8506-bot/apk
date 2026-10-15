@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f7f5f0">
+  <meta name="description" content="Mạch Nhớ — bộ nhớ hội thoại riêng tư, lưu trữ và tìm lại những điều quan trọng.">
+  <title>Mạch Nhớ — Bộ nhớ hội thoại</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="./" aria-label="Mạch Nhớ, trang tổng quan">
+        <span class="brand-mark">✳</span><span class="brand-copy"><strong>Mạch Nhớ</strong><small>PERSONAL KNOWLEDGE</small></span>
+      </a>
+      <div class="side-label">KHÔNG GIAN CỦA BẠN</div>
+      <nav class="nav-list" aria-label="Điều hướng chính">
+        <button data-nav="home" class="nav-item active"><span class="nav-icon">⌂</span><span>Tổng quan</span></button>
+        <button data-nav="conversations" class="nav-item"><span class="nav-icon">▤</span><span>Hội thoại</span><b id="navConversations">0</b></button>
+        <button data-nav="memories" class="nav-item"><span class="nav-icon">✳</span><span>Ghi nhớ</span><b id="navMemories">0</b></button>
+        <button data-nav="tasks" class="nav-item"><span class="nav-icon">↗</span><span>Việc cần làm</span><b id="navTasks">0</b></button>
+      </nav>
+      <div class="side-bottom">
+        <div class="privacy-card"><span class="lock-icon">⌑</span><div><strong>Dữ liệu của bạn</strong><p>Lưu trong trình duyệt này. Không tự gửi lên máy chủ.</p></div><span class="privacy-dot"></span></div>
+        <button data-nav="settings" class="nav-item settings-link"><span class="nav-icon">⚙</span><span>Thiết lập & sao lưu</span></button>
+        <div class="sidebar-foot">MỘT NƠI ĐỂ NHỚ ĐIỀU QUAN TRỌNG</div>
+      </div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div class="crumb"><span>Không gian cá nhân</span><span class="crumb-slash">/</span><strong id="breadcrumb">Tổng quan</strong></div>
+        <div class="top-actions">
+          <label class="search-box"><span>⌕</span><input id="globalSearch" type="search" placeholder="Tìm trong bộ nhớ… (Ctrl K)" aria-label="Tìm kiếm"></label>
+          <button id="installHelp" class="avatar" aria-label="Giới thiệu Mạch Nhớ" title="Giới thiệu">?</button>
+        </div>
+      </header>
+      <div id="view" class="view" aria-live="polite"></div>
+      <footer class="app-footer"><span>✳ Mạch Nhớ</span><span>Riêng tư trước · Bạn quyết định điều gì được giữ lại</span></footer>
+    </main>
+  </div>
+  <input id="fileInput" type="file" accept=".json,.txt,.md,.markdown,.html,.htm,application/json,text/plain,text/markdown" multiple hidden>
+  <div id="dropzone" class="drop-overlay"><div><strong>Thả file để nhập vào Mạch Nhớ</strong><span>JSON · TXT · Markdown · HTML</span></div></div>
+  <div id="busy" class="busy hidden"><span class="spinner"></span><span>Đang xử lý dữ liệu trên thiết bị…</span></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <dialog id="editorDialog" class="editor-dialog">
+    <form id="editorForm" method="dialog">
+      <div class="dialog-head"><div><div class="eyebrow">BỘ NHỚ CỦA BẠN</div><h2 id="editorTitle">Thêm ghi nhớ</h2></div><button type="button" class="close-dialog" onclick="document.querySelector('#editorDialog').close()" aria-label="Đóng">×</button></div>
+      <input id="editorKind" type="hidden" value="memory"><input id="editorId" type="hidden">
+      <label class="form-label">Tiêu đề<input id="editorName" type="text" maxlength="180" placeholder="Ví dụ: Đang học Phân tích hoạt động kinh doanh" required></label>
+      <div id="editorContentWrap"><label class="form-label">Nội dung<textarea id="editorContent" rows="4" maxlength="5000" placeholder="Ghi lại thông tin bạn muốn nhớ…" required></textarea></label></div>
+      <div id="editorCategoryWrap"><label class="form-label">Phân loại<select id="editorCategory"><option value="preference">Sở thích & ưu tiên</option><option value="study">Học tập</option><option value="project">Dự án</option><option value="goal">Mục tiêu</option><option value="other">Khác</option></select></label></div>
+      <div class="dialog-actions"><button type="button" class="btn btn-outline" onclick="document.querySelector('#editorDialog').close()">Hủy</button><button type="submit" class="btn btn-primary">Lưu lại</button></div>
+    </form>
+  </dialog>
+  <dialog id="importHelp" class="editor-dialog">
+    <div class="dialog-head"><div><div class="eyebrow">BẮT ĐẦU ĐÚNG CÁCH</div><h2>Chào mừng đến Mạch Nhớ</h2></div><button type="button" class="close-dialog" onclick="document.querySelector('#importHelp').close()" aria-label="Đóng">×</button></div>
+    <p>Mạch Nhớ giúp bạn lưu và tìm lại các cuộc trò chuyện, chọn thông tin dài hạn để ghi nhớ, và chuyển gói ghi nhớ vào một cuộc trò chuyện ChatGPT mới.</p>
+    <ol class="help-list"><li>Trong ChatGPT, yêu cầu xuất dữ liệu tài khoản rồi tải gói dữ liệu ZIP về thiết bị.</li><li>Giải nén file ZIP và chọn <strong>conversations.json</strong> tại đây.</li><li>Đọc các gợi ý, chỉ duyệt những gì bạn thật sự muốn lưu.</li><li>Sao lưu định kỳ trong mục Thiết lập & sao lưu.</li></ol>
+    <p class="muted">Ứng dụng không tự đọc lịch sử ChatGPT. Phân tích mặc định dùng quy tắc tại máy; hãy kiểm tra mọi gợi ý trước khi lưu.</p>
+    <div class="dialog-actions"><button type="button" class="btn btn-outline" onclick="document.querySelector('#importHelp').close()">Đóng</button><button type="button" class="btn btn-primary" onclick="document.querySelector('#importHelp').close();document.querySelector('#fileInput').click()">Nhập hội thoại</button></div>
+  </dialog>
+  <script src="./app.js" defer></script>
+</body>
+</html>

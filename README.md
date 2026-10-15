@@ -16,9 +16,9 @@ Mạch Nhớ là một ứng dụng web tĩnh giúp gom các cuộc trò chuyệ
 
 ### Dùng GitHub Pages
 
-Repo có workflow tại .github/workflows/pages.yml. Trong Settings → Pages, chọn GitHub Actions làm nguồn triển khai (chỉ cần thiết lập ban đầu nếu repo chưa bật Pages). Mỗi lần push lên main, workflow sẽ kiểm tra cú pháp và triển khai thư mục public/.
+Các file phục vụ website cũng được đặt ngay ở thư mục gốc để tương thích với Pages triển khai từ nhánh. Trong GitHub, vào Settings → Pages → Build and deployment; chọn Deploy from a branch, branch main và thư mục /(root) nếu chưa được chọn. Mỗi lần push lên main, GitHub Pages sẽ tự dựng lại website. Thư mục public/ vẫn được giữ làm bản sao phục vụ chạy local và kiểm tra tự động.
 
-Sau khi workflow hoàn tất, mở URL Pages được hiển thị trong phần Settings → Pages của repo.
+Mở URL Pages được hiển thị trong Settings → Pages của repo (thường có dạng https://<owner>.github.io/<repo>/).
 
 ### Chạy trên máy
 
