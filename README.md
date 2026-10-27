@@ -2,6 +2,11 @@
 
 Mạch Nhớ là một ứng dụng web tĩnh giúp gom các cuộc trò chuyện thành thư viện có thể tìm kiếm, đề xuất ghi nhớ dài hạn và chuyển thông tin đã chọn vào một cuộc trò chuyện AI mới.
 
+## Tài liệu kiến thức tổng hợp
+
+- [KHO_KIEN_THUC.md](KHO_KIEN_THUC.md): phân loại kiến thức đã trao đổi về thương mại điện tử, phân tích hoạt động kinh doanh, Lịch sử Đảng, cờ vua và các ghi chú học tập. Tệp này là tài liệu tham khảo; các số liệu/đáp án được đánh dấu cần đối chiếu phải kiểm tra lại với tài liệu gốc.
+- Có thể tải tệp Markdown này và nhập vào Mạch Nhớ khi muốn lưu nó trong thư viện của trình duyệt. Việc commit tệp lên GitHub không tự động đưa nội dung vào dữ liệu cục bộ của ứng dụng.
+
 ## Tính năng
 
 - Nhập gói xuất ChatGPT (conversations.json) hoặc các file TXT, Markdown, HTML có nội dung hội thoại.
