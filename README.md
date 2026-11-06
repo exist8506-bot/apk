@@ -59,3 +59,11 @@ Sau đó mở http://localhost:8080. Có thể dùng một máy chủ tĩnh tư�
     npm run check
 
 Lệnh kiểm tra cú pháp JavaScript/service worker, JSON manifest và các file tĩnh quan trọng. Nó không thay thế việc kiểm tra thủ công trên các trình duyệt mục tiêu.
+
+
+## Kho ôn tập Thương mại điện tử
+
+- [Kho kiến thức tổng hợp](KHO_KIEN_THUC.md)
+- [Tổng hợp kiến thức Chương 1–6 và trọng tâm dễ nhầm](ON_TAP_TMDT_CHUONG_1-6.md)
+
+Tài liệu PDF nguồn, các bộ câu hỏi Word và bản phân tích 45 câu Chương 4 được lưu trong thư viện tài liệu ChatGPT tại thư mục `/TMĐT - Ôn tập/`. File trong thư viện không tự động được đưa vào dữ liệu cục bộ của ứng dụng Mạch Nhớ.
