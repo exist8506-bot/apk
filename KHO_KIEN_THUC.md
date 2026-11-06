@@ -244,3 +244,12 @@ Theo README của dự án:
 ## Nguyên tắc cập nhật
 
 Khi có kiến thức mới, bổ sung đúng mục; không ghi đè số liệu cũ nếu chưa xác định đó là bản sửa. Mỗi ghi chú định lượng nên có tên chỉ tiêu, đơn vị, kỳ so sánh, nguồn và trạng thái xác minh. Sau khi đối chiếu tài liệu gốc, cập nhật nội dung và ghi ngày kiểm tra.
+
+
+---
+
+## 8. Tài liệu ôn tập Thương mại điện tử — Chương 1 đến 6
+
+Đã bổ sung bộ tài liệu nguồn và câu hỏi Chương 1–6. Xem bản tổng hợp chi tiết tại [ON_TAP_TMDT_CHUONG_1-6.md](ON_TAP_TMDT_CHUONG_1-6.md). Toàn bộ PDF và Word cuối cùng được lưu trong thư viện tài liệu ở thư mục `/TMĐT - Ôn tập/`; bản ZIP Word tổng hợp cũng nằm trong thư mục đó.
+
+Các bộ câu hỏi hoàn chỉnh hiện có: Chương 1, 2, 3, 5, 6 (mỗi chương 45 câu); Chương 4 lưu bộ 45 câu gốc và bản phân tích phong cách ra đề. Không lưu các bản nháp Chương 1 đã được thay thế.
