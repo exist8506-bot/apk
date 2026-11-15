@@ -4,8 +4,9 @@ Mạch Nhớ là một ứng dụng web tĩnh giúp gom các cuộc trò chuyệ
 
 ## Tài liệu kiến thức tổng hợp
 
+- [HO_SO_NGU_CANH.md](HO_SO_NGU_CANH.md): hồ sơ tiếp nối gồm cách hỗ trợ, các môn học/dự án, dữ liệu đã ghi nhận, việc đang mở và những giới hạn cần lưu ý. Đây là bản tóm lược, không phải toàn bộ lịch sử trò chuyện.
 - [KHO_KIEN_THUC.md](KHO_KIEN_THUC.md): phân loại kiến thức đã trao đổi về thương mại điện tử, phân tích hoạt động kinh doanh, Lịch sử Đảng, cờ vua và các ghi chú học tập. Tệp này là tài liệu tham khảo; các số liệu/đáp án được đánh dấu cần đối chiếu phải kiểm tra lại với tài liệu gốc.
-- Có thể tải tệp Markdown này và nhập vào Mạch Nhớ khi muốn lưu nó trong thư viện của trình duyệt. Việc commit tệp lên GitHub không tự động đưa nội dung vào dữ liệu cục bộ của ứng dụng.
+- Có thể tải các tệp Markdown này và nhập vào Mạch Nhớ khi muốn lưu chúng trong thư viện của trình duyệt. Việc commit tệp lên GitHub không tự động đưa nội dung vào dữ liệu cục bộ của ứng dụng.
 
 ## Tính năng
 
