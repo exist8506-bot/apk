@@ -74,3 +74,8 @@ Tài liệu PDF nguồn, các bộ câu hỏi Word và bản phân tích 45 câu
 
 - [Lộ trình học Thị trường chứng khoán](THI_TRUONG_CHUNG_KHOAN/LO_TRINH_HOC.md): tài liệu học từ nền tảng đến thực hành, gồm các loại chứng khoán, cấu trúc thị trường Việt Nam, cơ chế giao dịch, đọc bảng giá, báo cáo tài chính, phân tích cơ bản, định giá, phân tích kỹ thuật, quản trị rủi ro, tâm lý và kế hoạch tự học 8 tuần.
 - Phần quy định giao dịch và nguồn pháp lý có ghi ngày rà soát; cần kiểm tra lại nguồn chính thức trước khi áp dụng vì quy định có thể thay đổi.
+
+
+### Bài học chi tiết — Chặng 1
+
+- [Bài 1: Chứng khoán là gì? Thị trường chứng khoán là gì?](THI_TRUONG_CHUNG_KHOAN/CHANG_1_BAI_1_KHAI_NIEM.md): giải thích bản chất và định nghĩa pháp lý, phân biệt cổ phiếu/trái phiếu/chứng chỉ quỹ, thị trường sơ cấp/thứ cấp, ví dụ dòng tiền, phản biện các hiểu lầm và câu hỏi tự kiểm tra.
