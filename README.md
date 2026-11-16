@@ -68,3 +68,9 @@ Lệnh kiểm tra cú pháp JavaScript/service worker, JSON manifest và các fi
 - [Tổng hợp kiến thức Chương 1–6 và trọng tâm dễ nhầm](ON_TAP_TMDT_CHUONG_1-6.md)
 
 Tài liệu PDF nguồn, các bộ câu hỏi Word và bản phân tích 45 câu Chương 4 được lưu trong thư viện tài liệu ChatGPT tại thư mục `/TMĐT - Ôn tập/`. File trong thư viện không tự động được đưa vào dữ liệu cục bộ của ứng dụng Mạch Nhớ.
+
+
+## Lộ trình học Thị trường chứng khoán
+
+- [Lộ trình học Thị trường chứng khoán](THI_TRUONG_CHUNG_KHOAN/LO_TRINH_HOC.md): tài liệu học từ nền tảng đến thực hành, gồm các loại chứng khoán, cấu trúc thị trường Việt Nam, cơ chế giao dịch, đọc bảng giá, báo cáo tài chính, phân tích cơ bản, định giá, phân tích kỹ thuật, quản trị rủi ro, tâm lý và kế hoạch tự học 8 tuần.
+- Phần quy định giao dịch và nguồn pháp lý có ghi ngày rà soát; cần kiểm tra lại nguồn chính thức trước khi áp dụng vì quy định có thể thay đổi.
