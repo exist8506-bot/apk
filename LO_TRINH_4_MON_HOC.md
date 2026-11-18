@@ -20,7 +20,7 @@ Danh sách môn học đang theo học:
 | Môn | Trạng thái |
 |---|---|
 | Thị trường chứng khoán | Đã bắt đầu xây dựng lộ trình và học nền tảng |
-| Quy hoạch tổng thể phát triển kinh tế – xã hội | Đã ghi nhận môn học; chờ tài liệu để triển khai |
+| Quy hoạch tổng thể phát triển kinh tế – xã hội | Đã tìm khung đề cương tham khảo; chờ slide/đề cương của lớp để phân tích sát giảng viên |
 | Dự báo kinh tế | Đã ghi nhận môn học; chờ tài liệu để triển khai |
 | Đầu tư quốc tế | Đang học Chương 1 và Chương 2 (phần II) |
 
@@ -38,3 +38,10 @@ Danh sách môn học đang theo học:
 - Bản phân tích và dự đoán câu hỏi: [Chương 2 — Các hình thức cơ bản của đầu tư quốc tế](DAU_TU_QUOC_TE/CHUONG_2_HINH_THUC_DAU_TU_QUOC_TE.md).
 - Phạm vi tệp hiện có: bắt đầu từ mục 2.3 ODA, tiếp đến FII/FPI, tín dụng tư nhân quốc tế (IPL), và các hình thức đầu tư thay thế (Hedge Fund, REIT, Venture Capital, ETF). Chưa có nội dung 2.1–2.2 trong phần tệp được gửi.
 - Trọng tâm dự đoán: đặc điểm và bốn tiêu chí phân loại ODA; tác động tích cực/tiêu cực của ODA; phân biệt FDI–FPI–IPL; cổ phiếu–trái phiếu; nhận diện Hedge Fund, REIT, VC và ETF.
+
+
+## Môn: Quy hoạch tổng thể phát triển kinh tế – xã hội
+
+- Hồ sơ tìm hiểu ban đầu: [Tổng quan môn học và khung câu hỏi dự đoán](QUY_HOACH_TONG_THE_PT_KTXH/TONG_QUAN_MON_HOC.md).
+- Đã tham khảo đề cương đại học công khai của Học viện Nông nghiệp Việt Nam và Trường Đại học Tài nguyên và Môi trường Hà Nội.
+- Chưa có slide/đề cương riêng của lớp người học; dự đoán hiện tại chỉ là khung tham khảo, cần hiệu chỉnh khi nhận tài liệu gốc.
