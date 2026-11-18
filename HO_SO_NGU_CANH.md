@@ -134,3 +134,19 @@ Các chủ đề người học từng ôn qua trắc nghiệm:
 - Một số số liệu là bản ghi từ bài giảng/trao đổi trước, chưa có bảng gốc để đối chiếu; chúng đã được đánh dấu rõ ở trên.
 - Tên tệp được nhắc tới không có nghĩa nội dung tệp đó đã được lưu trong repo. Cần kiểm tra file gốc trong ChatGPT Library hoặc yêu cầu người học tải lại nếu không truy cập được.
 - Không suy ra thông tin cá nhân khác ngoài những gì đã được xác nhận.
+
+
+## 10. Bốn môn học đang theo học
+
+- Thị trường chứng khoán.
+- Quy hoạch tổng thể phát triển kinh tế – xã hội.
+- Dự báo kinh tế.
+- Đầu tư quốc tế.
+
+Hiện bắt đầu học môn **Đầu tư quốc tế**, đã cung cấp slide Chương 1 “Tổng quan về đầu tư quốc tế”. Mục tiêu không chỉ tóm tắt slide mà còn suy luận những câu hỏi giảng viên có thể đặt tiếp theo dựa trên mạch nội dung, mức độ nhấn mạnh, khái niệm dễ nhầm và dạng câu hỏi vận dụng.
+
+Nguyên tắc phân tích: tách rõ nội dung có trong slide, phần kiến thức bổ sung và dự đoán câu hỏi; không coi dự đoán là đề thi chắc chắn. Ưu tiên phân tích theo chuỗi khái niệm → đặc trưng → phân loại → so sánh → tình huống.
+
+Tài liệu GitHub:
+- `LO_TRINH_4_MON_HOC.md`
+- `DAU_TU_QUOC_TE/CHUONG_1_TONG_QUAN_DU_DOAN_CAU_HOI.md`
