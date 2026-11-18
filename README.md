@@ -79,3 +79,9 @@ Tài liệu PDF nguồn, các bộ câu hỏi Word và bản phân tích 45 câu
 ### Bài học chi tiết — Chặng 1
 
 - [Bài 1: Chứng khoán là gì? Thị trường chứng khoán là gì?](THI_TRUONG_CHUNG_KHOAN/CHANG_1_BAI_1_KHAI_NIEM.md): giải thích bản chất và định nghĩa pháp lý, phân biệt cổ phiếu/trái phiếu/chứng chỉ quỹ, thị trường sơ cấp/thứ cấp, ví dụ dòng tiền, phản biện các hiểu lầm và câu hỏi tự kiểm tra.
+
+
+## Các môn học hiện tại
+
+- [Lộ trình học 4 môn](LO_TRINH_4_MON_HOC.md): Thị trường chứng khoán; Quy hoạch tổng thể phát triển kinh tế – xã hội; Dự báo kinh tế; Đầu tư quốc tế.
+- [Đầu tư quốc tế — Chương 1: Tổng quan và dự đoán câu hỏi](DAU_TU_QUOC_TE/CHUONG_1_TONG_QUAN_DU_DOAN_CAU_HOI.md).
