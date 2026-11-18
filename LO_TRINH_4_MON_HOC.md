@@ -22,10 +22,19 @@ Danh sách môn học đang theo học:
 | Thị trường chứng khoán | Đã bắt đầu xây dựng lộ trình và học nền tảng |
 | Quy hoạch tổng thể phát triển kinh tế – xã hội | Đã ghi nhận môn học; chờ tài liệu để triển khai |
 | Dự báo kinh tế | Đã ghi nhận môn học; chờ tài liệu để triển khai |
-| Đầu tư quốc tế | Đang học Chương 1 — Tổng quan về đầu tư quốc tế |
+| Đầu tư quốc tế | Đang học Chương 1 và Chương 2 (phần II) |
 
 ## Môn đang học: Đầu tư quốc tế
 
-- Tài liệu đầu tiên: `CHƯƠNG 1.pptx`.
+### Chương 1 — Tổng quan về đầu tư quốc tế
+
+- Tài liệu: `CHƯƠNG 1.pptx`.
 - Bản phân tích và dự đoán câu hỏi: [Chương 1 — Tổng quan về đầu tư quốc tế](DAU_TU_QUOC_TE/CHUONG_1_TONG_QUAN_DU_DOAN_CAU_HOI.md).
 - Mạch học: khái niệm đầu tư → đặc trưng → phân loại → dự án đầu tư → đầu tư quốc tế → dòng vốn và các hình thức đầu tư → chuyển giao công nghệ → vai trò của đầu tư nước ngoài.
+
+### Chương 2 — Các hình thức cơ bản của đầu tư quốc tế (phần II)
+
+- Tài liệu: `CHƯƠNG 2 - Phan II.pptx` do người học cung cấp.
+- Bản phân tích và dự đoán câu hỏi: [Chương 2 — Các hình thức cơ bản của đầu tư quốc tế](DAU_TU_QUOC_TE/CHUONG_2_HINH_THUC_DAU_TU_QUOC_TE.md).
+- Phạm vi tệp hiện có: bắt đầu từ mục 2.3 ODA, tiếp đến FII/FPI, tín dụng tư nhân quốc tế (IPL), và các hình thức đầu tư thay thế (Hedge Fund, REIT, Venture Capital, ETF). Chưa có nội dung 2.1–2.2 trong phần tệp được gửi.
+- Trọng tâm dự đoán: đặc điểm và bốn tiêu chí phân loại ODA; tác động tích cực/tiêu cực của ODA; phân biệt FDI–FPI–IPL; cổ phiếu–trái phiếu; nhận diện Hedge Fund, REIT, VC và ETF.
