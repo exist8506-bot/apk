@@ -85,3 +85,5 @@ Tài liệu PDF nguồn, các bộ câu hỏi Word và bản phân tích 45 câu
 
 - [Lộ trình học 4 môn](LO_TRINH_4_MON_HOC.md): Thị trường chứng khoán; Quy hoạch tổng thể phát triển kinh tế – xã hội; Dự báo kinh tế; Đầu tư quốc tế.
 - [Đầu tư quốc tế — Chương 1: Tổng quan và dự đoán câu hỏi](DAU_TU_QUOC_TE/CHUONG_1_TONG_QUAN_DU_DOAN_CAU_HOI.md).
+
+- [Thực hành dự đoán 23/11/2026](THI_TRUONG_CHUNG_KHOAN/THUC_HANH_DU_DOAN/2026-11-23_THACH_DAU.md): tập hợp 3 ảnh, phân nhóm tăng/tăng trần/giảm sàn và lựa chọn CLI, PIT, VKC để kiểm chứng sau phiên.
